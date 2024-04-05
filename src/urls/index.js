@@ -1,10 +1,10 @@
-import pool from "../db_confg/db.js";
+import pool from "../db_config/db.js";
 
 // TODO: Add a function to save the shortened URL to the database
 //TODO: Add a function to retrieve the list of shortened URLs from the database
 //Function to delete a url from the database
 
-// Function to save a shortened URL to the database
+// My function to save a shortened URL to the database
 async function saveShortenedURL(originalURL, shortenedURL) {
   try {
     const query = {
@@ -19,7 +19,7 @@ async function saveShortenedURL(originalURL, shortenedURL) {
   }
 }
 
-// Function to retrieve the list of shortened URLs from the database
+// My function to retrieve the list of shortened URLs from the database
 async function getAllShortenedURLs() {
   try {
     const query = "SELECT short_url FROM url_table";
@@ -33,11 +33,16 @@ async function getAllShortenedURLs() {
   }
 }
 
-//Function to delete a long and shortened URLs from the database
-// async function deleteAURL(url) {
-//   try {
-//     const query = `DELETE FROM short_url WHERE id = ${url}`;
-//   } catch {}
-// }
+//My function to delete a long and shortened URLs from the database
+async function deleteAURL(url) {
+  try {
+    const query = `DELETE FROM short_url WHERE id = ${url}`;
+    const deleted = await pool(query);
+    console.log(`${url} deleted succesfully`);
+    return;
+  } catch (error) {
+    console.log(`Couldn't delete ${url}`, error);
+  }
+}
 
-export { saveShortenedURL, getAllShortenedURLs };
+export { saveShortenedURL, getAllShortenedURLs, deleteAURL };

@@ -5,7 +5,13 @@ import axios from "axios";
 import chalk from "chalk";
 // import validURL from "valid-url";
 
-import { saveShortenedURL, getAllShortenedURLs } from "../urls/index.js";
+import {
+  saveShortenedURL,
+  getAllShortenedURLs,
+  deleteAURL,
+} from "../urls/index.js";
+
+const apiURL = "https://cleanuri.com/api/v1/shorten";
 
 const program = new Command();
 
@@ -14,9 +20,6 @@ program
   .description("shorten a given url")
   .action(async (url) => {
     try {
-      // if (!validURL.isUri(url)) {
-      //   throw new Error(chalk.red("Invalid URL"));
-      // }
       const shortenedURL = await shortenURL(url);
       const longURL = url;
 
@@ -37,9 +40,9 @@ program
   .action(async () => {
     try {
       const shortenedURLs = await listShortenedURLs();
-      console.log("Shortened URLs:");
+      console.log(chalk.bgGray("Shortened URLs:"));
       shortenedURLs.forEach((url, index) => {
-        console.log(`${index + 1}. ${url}`);
+        console.log(chalk.yellow(`${index + 1}. ${url}`));
       });
     } catch (error) {
       console.error(
@@ -64,16 +67,19 @@ program
 program.parse(process.argv);
 
 async function shortenURL(longUrl) {
-  const response = await axios.post("https://cleanuri.com/api/v1/shorten", {
+  const response = await axios.post(apiURL, {
     url: longUrl,
   });
   return response.data.result_url;
-  // saveShortenedURL();
 }
 
 async function listShortenedURLs() {
-  const response = await axios.get("https://cleanuri.com/api/v1/urls");
-  return response.data;
+  const listOfURLs = await getAllShortenedURLs();
+  if (listOfURLs.length < 1) {
+    console.log(chalk.green("SORRY, There are no links to show"));
+    return [];
+  }
+  return listOfURLs.map((url) => url.short_url);
 }
 
 export { shortenURL, listShortenedURLs };
