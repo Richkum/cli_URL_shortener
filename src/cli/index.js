@@ -3,18 +3,14 @@
 import { Command } from "commander";
 import axios from "axios";
 import chalk from "chalk";
-// import validURL from "valid-url";
 
-import {
-  saveShortenedURL,
-  getAllShortenedURLs,
-  deleteAURL,
-} from "../urls/index.js";
+import { saveShortenedURL, getAllShortenedURLs } from "../urls/index.js";
 
 const apiURL = "https://cleanuri.com/api/v1/shorten";
 
 const program = new Command();
 
+// My command to shorten a URL
 program
   .command("shorten <url>")
   .description("shorten a given url")
@@ -22,11 +18,9 @@ program
     try {
       const shortenedURL = await shortenURL(url);
       const longURL = url;
-
       if (shortenedURL) {
         await saveShortenedURL(longURL, shortenedURL);
       }
-
       console.log(`Shortened URL: ${chalk.yellowBright(shortenedURL)}`);
       console.log(`Long URL: ${url}`);
     } catch (error) {
@@ -34,6 +28,7 @@ program
     }
   });
 
+// My command to list all shortened URLs
 program
   .command("list")
   .description("list all shortened URLs")
@@ -52,20 +47,9 @@ program
     }
   });
 
-// program
-//   .command("delete <id>")
-//   .description("delete a shortened URL")
-//   .action(async (id) => {
-//     try {
-//       await axios.delete(`https://cleanuri.com/api/v1/urls/${id}`);
-//       console.log(`Shortened URL with ID ${id} deleted successfully`);
-//     } catch (error) {
-//       console.error(`Error: Unable to delete shortened URL with ID ${id}`);
-//     }
-//   });
-
 program.parse(process.argv);
 
+// My function to shorten a URL
 async function shortenURL(longUrl) {
   const response = await axios.post(apiURL, {
     url: longUrl,
@@ -73,6 +57,7 @@ async function shortenURL(longUrl) {
   return response.data.result_url;
 }
 
+// My function to list all shortened URLs
 async function listShortenedURLs() {
   const listOfURLs = await getAllShortenedURLs();
   if (listOfURLs.length < 1) {

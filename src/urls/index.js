@@ -1,8 +1,5 @@
 import pool from "../db_config/db.js";
-
-// TODO: Add a function to save the shortened URL to the database
-//TODO: Add a function to retrieve the list of shortened URLs from the database
-//Function to delete a url from the database
+import chalk from "chalk";
 
 // My function to save a shortened URL to the database
 async function saveShortenedURL(originalURL, shortenedURL) {
@@ -12,9 +9,9 @@ async function saveShortenedURL(originalURL, shortenedURL) {
       values: [originalURL, shortenedURL],
     };
     await pool.query(query);
-    console.log("Shortened URL saved to database successfully");
+    console.log("Shortened URL saved successfully");
   } catch (error) {
-    console.error("AN ERROR OCCURRED", error);
+    console.error(chalk.red("AN ERROR OCCURRED"), error);
     throw error.message;
   }
 }
@@ -27,22 +24,12 @@ async function getAllShortenedURLs() {
     return result.rows;
   } catch (error) {
     console.error(
-      "An error occurred while retrieving shortened URLs, please try again"
+      chalk.red(
+        "An error occurred while retrieving shortened URLs, please try again"
+      )
     );
     throw error.message;
   }
 }
 
-//My function to delete a long and shortened URLs from the database
-async function deleteAURL(url) {
-  try {
-    const query = `DELETE FROM short_url WHERE id = ${url}`;
-    const deleted = await pool(query);
-    console.log(`${url} deleted succesfully`);
-    return;
-  } catch (error) {
-    console.log(`Couldn't delete ${url}`, error);
-  }
-}
-
-export { saveShortenedURL, getAllShortenedURLs, deleteAURL };
+export { saveShortenedURL, getAllShortenedURLs };
