@@ -14,7 +14,6 @@ This CLI tool allows users to shorten long URLs using a URL shortening service's
 
 1. Clone the repository.
 2. Install dependencies with `npm install`.
-3. Set up database credentials and environment variables in a `.env` file.
 
 ## Configuration
 
