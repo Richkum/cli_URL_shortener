@@ -22,7 +22,7 @@ program
         await saveShortenedURL(longURL, shortenedURL);
       }
       console.log(`Shortened URL: ${chalk.yellowBright(shortenedURL)}`);
-      console.log(`Long URL: ${url}`);
+      console.log(chalk.bgGray(`Long URL: ${url}`));
     } catch (error) {
       console.log(chalk.red(`ERROR: ${url} is not a valid URL`), error.message);
     }
