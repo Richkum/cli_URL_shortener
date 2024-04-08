@@ -9,7 +9,3 @@ This CLI tool allows users to shorten long URLs using a URL shortening service's
 - Shorten a URL: `node index.js shorten <url>`
 - List shortened URLs: `node index.js list`
 - Learn more about the commands `--help`
-
-## Error Handling
-
-Errors are handled gracefully with descriptive error messages displayed to the user.
