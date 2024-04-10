@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "usr-shortener": "./bin/www"
+    "url-shortener": "./bin/www"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

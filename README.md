@@ -7,18 +7,28 @@ This CLI tool allows users to shorten long URLs using a URL shortening service's
 ## Installation
 
 1. Clone the repository.
-2. In the project directory, open your terminal and run `npm install -g `.
+2. Run `npm install `
+3. In the project directory, open your terminal and run `npm install -g `
+
+## Congiguration
+
+- Connect to your database
+- Create a table named `url_table` with two columns : `long_url` and `short_url`
 
 ## Usage
 
-- Shorten a URL: ` shorten <url>`
-- List shortened URLs: `list`
-- To know more about a command: `-- help`
+- Shorten a URL: `<CLI name> <command> <url>`
+  To shorten a url, use the `shorten` command.
+  For example `url-shortener shorten https://www.example.com`
+- List shortened URLs: `<CLI name> <command>`
+  To see a list of shortened URLs, use the `list` command.
+  For example `url-shortener list` and you will see all the URLs that you've shortened
+- To know more about a command: `help`
 
 ## API
 
 The API i used in this project for the URL shortening is the `cleanurl API`
-You can visit thier site at `https://cleanuri.com/docs`to know more about thier API
+You can visit their site at (https://cleanuri.com/docs) to know more about their API
 
 ## License
 
